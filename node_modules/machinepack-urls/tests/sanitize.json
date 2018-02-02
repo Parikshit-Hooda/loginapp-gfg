@@ -1,0 +1,10 @@
+{
+  "machine": "sanitize",
+  "expectations": [
+    {
+      "todo": true,
+      "using": {},
+      "outcome": "success"
+    }
+  ]
+}

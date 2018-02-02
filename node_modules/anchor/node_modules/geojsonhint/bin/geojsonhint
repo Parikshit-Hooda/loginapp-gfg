@@ -1,0 +1,41 @@
+#!/usr/bin/env node
+
+var fs = require('fs'),
+    path = require('path'),
+    geojsonhint = require('../'),
+    colors = require('colors'),
+    concat = require('concat-stream'),
+    argv = require('minimist')(process.argv.slice(2), { boolean: 'json' });
+
+
+if (process.stdin.isTTY && !argv._[0]) {
+    process.stdout.write(fs.readFileSync(__dirname + '/HELP.md'));
+    process.exit(1);
+}
+
+(argv._.length ? fs.createReadStream(argv._[0]) : process.stdin).pipe(concat(hint));
+
+function hint(input) {
+
+    var errors = geojsonhint.hint(input.toString());
+
+    if (!errors) {
+        process.exit(0);
+    }
+
+    if (argv.json) {
+        if (errors instanceof Error) {
+            console.log(JSON.stringify(errors.toString(), null, 2));
+        } else {
+            console.log(JSON.stringify(errors, null, 2));
+        }
+    } else {
+        if (errors instanceof Error) {
+            console.log('invalid JSON');
+            throw errors;
+        }
+        errors.forEach(function(e) {
+            console.log('line %s, %s', (''+e.line), e.message.red);
+        });
+    }
+}

@@ -1,0 +1,10 @@
+{
+  "machine": "validate",
+  "expectations": [
+    {
+      "todo": true,
+      "using": {},
+      "outcome": "success"
+    }
+  ]
+}

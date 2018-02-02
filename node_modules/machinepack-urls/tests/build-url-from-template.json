@@ -1,0 +1,10 @@
+{
+  "machine": "build-url-from-template",
+  "expectations": [
+    {
+      "todo": true,
+      "using": {},
+      "outcome": "success"
+    }
+  ]
+}
